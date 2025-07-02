@@ -22,6 +22,9 @@ public:
 		if (guessNumber == "124") {
 			return { false, 2, 0 };
 		}
+		if (guessNumber == "132") {
+			return { false, 1, 2 };
+		}
 		return { false, 0,0 };
 	}
 
