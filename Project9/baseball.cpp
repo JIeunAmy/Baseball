@@ -20,9 +20,30 @@ public:
 			return { true, 3,0 };
 		}
 		if (guessNumber == "124") {
-			return { false, 2, 0 };
+			int idx = 0;
+			GuessResult result = { false,0,0 };
+
+			for (char ch : guessNumber)
+			{
+				if (ch == question[idx]) {
+					result.strikes++;
+				}
+				idx++;
+			}
+			return result;
 		}
 		if (guessNumber == "132") {
+			GuessResult result = { false, 0,0 };
+
+			for (int idx = 0; idx < 3; idx++) {
+				for (int jdx = 0; jdx < 3; jdx++) {
+					if (idx == jdx) continue;
+
+					if (guessNumber[idx] == question[jdx]) {
+						result.balls++;
+					}
+				}
+			}
 			return { false, 1, 2 };
 		}
 		return { false, 0,0 };
