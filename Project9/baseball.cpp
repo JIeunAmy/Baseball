@@ -16,37 +16,8 @@ class Baseball
 public:
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		if (guessNumber == question) {
-			return { true, 3,0 };
-		}
-		if (guessNumber == "124") {
-			int idx = 0;
-			GuessResult result = { false,0,0 };
-
-			for (char ch : guessNumber)
-			{
-				if (ch == question[idx]) {
-					result.strikes++;
-				}
-				idx++;
-			}
-			return result;
-		}
-		if (guessNumber == "132") {
-			GuessResult result = { false, 0,0 };
-
-			for (int idx = 0; idx < 3; idx++) {
-				for (int jdx = 0; jdx < 3; jdx++) {
-					if (idx == jdx) continue;
-
-					if (guessNumber[idx] == question[jdx]) {
-						result.balls++;
-					}
-				}
-			}
-			return { false, 1, 2 };
-		}
-		return { false, 0,0 };
+		
+		return checkResult(guessNumber);
 	}
 
 	explicit Baseball(const string& question) : question(question) {
@@ -69,10 +40,34 @@ private:
 			throw invalid_argument("Must not have the same number");
 		}
 	}
+
 	bool isDuplicatedNumber(string guessNumber) {
 		return ((guessNumber[0] == guessNumber[1])
 			|| (guessNumber[0] == guessNumber[2])
 			|| (guessNumber[1] == guessNumber[2]));
+	}
+
+	GuessResult checkResult(string guessNumber) {
+
+		GuessResult result = { false, 0,0 };
+
+		for (int idx = 0; idx < 3; idx++) {
+			for (int jdx = 0; jdx < 3; jdx++) {
+				if (guessNumber[idx] == question[jdx]) {
+					if (idx == jdx)
+					{
+						result.strikes++;
+					}
+					else {
+						result.balls++;
+
+					}
+				}
+			}
+		}
+
+		if (result.strikes == 3) { result.solved = true; }
+		return result;
 	}
 
 private:
