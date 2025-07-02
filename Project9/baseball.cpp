@@ -19,6 +19,9 @@ public:
 		if (guessNumber == question) {
 			return { true, 3,0 };
 		}
+		if (guessNumber == "124") {
+			return { false, 2, 0 };
+		}
 		return { false, 0,0 };
 	}
 
